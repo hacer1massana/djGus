@@ -1,11 +1,8 @@
 150424UMAR
-
 - se crean carpetas
+--/book /book.html, js/app.js
+--/prototypes /OSCDisplay.html 
 
-/book /book.html, js/app.js
-
-/prototypes /OSCDisplay.html 
+[## djGus](https://hacer1massana.github.io/djGus/)
 
 
-## djGus
-Una vibración, una simbología, con música lo categorizamos y esa armonía en binario ahora lo transformamos.
