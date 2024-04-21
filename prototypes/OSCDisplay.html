@@ -1,14 +1,78 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.title = `OSCDv0.3`;</script>
+<script src="testing.js" defer></script>
+<script src="OSC.js" defer></script>
+<style href="style.css"></style>
+<!-- testing -->
 
-<body>
-
-</body>
-
-</html>
+<div id="app" class="app">
+  <nav class="menu">
+    <button class="menu__btn" onclick="play" title="play">play
+    </button>
+    <button class="menu__btn" onclick="stop" title="pause">stop
+    </button>
+    <button class="menu__btn" onclick="addOscillator('sine')" title="add sine oscillator">sine
+    </button>
+    <button class="menu__btn" onclick="addOscillator('square')" title="add square oscillator">square
+    </button>
+    <button class="menu__btn" onclick="addOscillator('triangle')" title="add triangle oscillator">triangle
+    </button>
+    <button class="menu__btn" onclick="addOscillator('sawtooth')" title="add sawtooth oscillator">sawthooth
+    </button>
+  </nav>
+  <fieldset class="form">
+    <legend class="form__title">Graph</legend>
+    <canvas class="form__canvas"></canvas>
+  </fieldset>
+  <fieldset class="form">
+    <legend class="form__title">Carrier</legend>
+    <div class="form__controls">
+      <div class="form__group">
+        <label class="form__label">type</label>
+        <select class="form__field" v-model="carrier.type">
+          <option value="sine">sine</option>
+          <option value="square">square</option>
+          <option value="triangle">triangle</option>
+          <option value="sawtooth">sawtooth</option>
+        </select>
+      </div>
+      <div class="form__group">
+        <label for="carrfreq" class="form__label">frequency: {{carrier.freq}} Hz</label>
+        <input id="carrfreq" class="form__field" type="range" v-model="carrier.freq" min="1" max="1000">  
+      </div>
+      <div class="form__group">
+        <label for="carrfreq" class="form__label">gain: {{carrier.gain.toFixed(2)}}</label>
+        <input id="carrgain" class="form__field" type="range" v-model="carrier.gain" min="0.0" max="1.0" step="0.01">  
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="form" v-for="(mod, idx) in mods">
+    <legend class="form__title">Modulator {{idx+1}}</legend>
+    <button class="form__close" @click="removeOscillator(idx)" aria-label="remove"> x </button>
+    <div class="form__controls">
+      <div class="form__group">
+        <label class="form__label">type</label>
+        <select class="form__field" v-model="mod.type">
+          <option value="sine">sine</option>
+          <option value="square">square</option>
+          <option value="triangle">triangle</option>
+          <option value="sawtooth">sawtooth</option>
+        </select>
+      </div>
+      <div class="form__group">
+        <label :for="'modfreq'+(idx+1)" class="form__label">frequency: {{mod.freq}} Hz</label>
+        <input id="'modfreq'+(idx+1)" class="form__field" v-model="mod.freq" type="range" min="1" max="1000">
+      </div>
+      <div class="form__group">
+        <label :for="'modgain'+(idx+1)" class="form__label">gain: {{mod.gain}}</label>
+        <input :id="'modgain'+(idx+1)" class="form__field" v-model="mod.gain" type="range" min="1" max="1000">
+      </div>
+    </div>
+  </fieldset>
+</div>
+<template class="pen__html" type="text/plain">
+  <button id="play"> play </button>
+  <button id="stop"> stop </button>
+</template>
